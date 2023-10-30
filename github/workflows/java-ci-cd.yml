@@ -1,0 +1,30 @@
+name: Java CI/CD
+
+on:
+  push:
+    branches:
+      - main  # Replace with your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'  # Specify the Java version you need
+
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: Run Tests
+      run: mvn test
+
+    - name: Deploy to Production
+      if: success() && github.ref == 'refs/heads/main'
+      run: |
+        # Add deployment steps here (e.g., deploying to a server or cloud service).
